@@ -1,8 +1,13 @@
 <template>
   <div id="cart">
     <div class="relative block">
-      <div class="intro prose prose-lg">
-        <h2>Cart</h2>
+      <div class="flex justify-between">
+        <div class="intro prose prose-lg">
+          <h2>Cart</h2>
+        </div>
+        <div class="price">
+          <p>{{ totalPrice }}</p>
+        </div>
       </div>
       <hr />
       <!-- Products Loop -->
@@ -26,6 +31,14 @@ export default {
         return cartState.indexOf(p) === index
       })
       return uniqueProducts
+    },
+    totalPrice() {
+      const cartState = this.$store.state.cart
+      let price = 0
+      cartState.forEach((product) => {
+        price += product.price
+      })
+      return price
     },
   },
 }
