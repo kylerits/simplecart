@@ -1,12 +1,13 @@
 <template>
   <div id="cart">
     <div class="relative block">
-      <div class="flex justify-between">
+      <div class="flex justify-between items-center">
         <div class="intro prose prose-lg">
           <h2>Cart</h2>
         </div>
         <div class="price">
-          <p>{{ totalPrice }}</p>
+          <!-- TODO: Format Price -->
+          <p><strong>Total:</strong> ${{ totalPrice }}</p>
         </div>
       </div>
       <hr />

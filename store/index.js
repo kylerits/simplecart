@@ -12,7 +12,7 @@ export const mutations = {
         url: product.url,
         manufacturer: product.manufacturer,
         productName: product.productName,
-        itemId: product.itemId,
+        itemId: product.itemid,
         quantity: product.quantity,
         price: product.price,
         description: product.description,
@@ -23,13 +23,19 @@ export const mutations = {
   },
   // Add to cart
   addToCart(state, product) {
-    // const cart = new Array(state.cart)
-    // console.log(cart)
     state.cart.push(product)
-    console.log(state.cart)
+    // console.log(state.cart)
   },
   // Remove from cart
-  removeFromCart(state, product) {},
+  removeFromCart(state, product) {
+    const productIndex = state.cart.findIndex((el) => {
+      // console.log(el)
+      return el.itemId === product.itemId
+    })
+    // console.log(productIndex)
+    state.cart.splice(productIndex, 1)
+    // console.log(state.cart)
+  },
   // Clear Cart
   clearCart(state) {},
 }

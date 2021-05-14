@@ -15,6 +15,7 @@
           border-gray-100
         "
       >
+        <!-- TODO: Catch image src 404 -->
         <nuxt-img
           v-if="data.image"
           :src="data.image"
@@ -37,6 +38,7 @@
           <p>{{ data.description }}</p>
         </div>
         <div class="flex justify-between items-center">
+          <!-- TODO: Format Price -->
           <div>${{ data.price }}</div>
           <div>
             <button
@@ -53,6 +55,21 @@
               @click="addToCart(data)"
             >
               Add to Cart
+            </button>
+            <button
+              id="addToCart"
+              class="
+                px-3
+                py-1
+                text-white
+                duration-200
+                bg-red-500
+                rounded
+                hover:bg-red-600
+              "
+              @click="removeFromCart(data)"
+            >
+              Remove
             </button>
           </div>
         </div>
@@ -75,6 +92,11 @@ export default {
     addToCart(product) {
       if (product) {
         this.$store.commit('addToCart', product)
+      }
+    },
+    removeFromCart(product) {
+      if (product) {
+        this.$store.commit('removeFromCart', product)
       }
     },
   },
