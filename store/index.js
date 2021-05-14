@@ -33,7 +33,9 @@ export const mutations = {
       return el.itemId === product.itemId
     })
     // console.log(productIndex)
-    state.cart.splice(productIndex, 1)
+    if (productIndex >= 0) {
+      state.cart.splice(productIndex, 1)
+    }
     // console.log(state.cart)
   },
   // Clear Cart
