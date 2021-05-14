@@ -41,6 +41,7 @@
           <!-- TODO: Format Price -->
           <div>${{ data.price }}</div>
           <div>
+            <!-- TODO: Disable Button when availability is false -->
             <button
               id="addToCart"
               class="
@@ -88,6 +89,7 @@ export default {
       },
     },
   },
+  // TODO: Add computed properties to check for amount in cart and availability. Availability is determined by amount in cart vs product quantity.
   methods: {
     addToCart(product) {
       if (product) {
