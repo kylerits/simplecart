@@ -1,8 +1,8 @@
 <template>
-  <div id="products">
+  <div id="cart">
     <div class="relative block">
       <div class="intro prose prose-lg">
-        <h2>Products</h2>
+        <h2>Cart</h2>
       </div>
       <hr />
       <!-- Products Loop -->
@@ -21,8 +21,11 @@
 export default {
   computed: {
     products() {
-      const productState = this.$store.state.products
-      return productState
+      const cartState = this.$store.state.cart
+      const uniqueProducts = cartState.filter((p, index) => {
+        return cartState.indexOf(p) === index
+      })
+      return uniqueProducts
     },
   },
 }

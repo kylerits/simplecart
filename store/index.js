@@ -22,7 +22,12 @@ export const mutations = {
     state.products = productMap
   },
   // Add to cart
-  addToCart(state, product) {},
+  addToCart(state, product) {
+    // const cart = new Array(state.cart)
+    // console.log(cart)
+    state.cart.push(product)
+    console.log(state.cart)
+  },
   // Remove from cart
   removeFromCart(state, product) {},
   // Clear Cart
