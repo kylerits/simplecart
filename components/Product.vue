@@ -15,14 +15,15 @@
           border-gray-100
         "
       >
-        <!-- TODO: Catch image src 404 -->
         <nuxt-img
-          v-if="data.image"
+          v-if="data.image && showImage"
           :src="data.image"
           fit="inside"
           width="200"
           height="200"
           class="w-full h-full object-contain"
+          fallback="https://via.placeholder.com/500x500?text=Image%20Not%20Found!"
+          @error.native="imageError()"
         />
         <div v-else class="flex items-center justify-center w-full h-full">
           <p class="text-xs uppercase tracking-wider text-gray-400">
@@ -32,17 +33,26 @@
       </div>
       <div class="product-info px-5">
         <div class="prose pb-6">
-          <h3>
-            <a :href="data.url">{{ data.productName }}</a>
+          <h3 class="flex items-center justify-between">
+            <a :href="data.url" class="inline-block">{{ data.productName }}</a>
+            <span v-if="inCart && cartCount > 1" class="text-sm inline-block"
+              ># in Cart: {{ cartCount }}</span
+            >
           </h3>
+          <p>
+            <span class="text-xs font-bold uppercase tracking-wider">{{
+              data.manufacturer
+            }}</span>
+          </p>
           <p>{{ data.description }}</p>
+          <p><a :href="data.url">Learn More</a></p>
         </div>
         <div class="flex justify-between items-center">
           <!-- TODO: Format Price -->
           <div>${{ data.price }}</div>
           <div>
-            <!-- TODO: Disable Button when availability is false -->
             <button
+              v-if="available"
               id="addToCart"
               class="
                 px-3
@@ -88,8 +98,33 @@ export default {
         return {}
       },
     },
+    inCart: {
+      type: Boolean,
+      default() {
+        return false
+      },
+    },
   },
-  // TODO: Add computed properties to check for amount in cart and availability. Availability is determined by amount in cart vs product quantity.
+  data() {
+    return {
+      showImage: true,
+    }
+  },
+  computed: {
+    cartCount() {
+      const id = this.data.itemid
+      const cart = this.$store.state.cart
+      const filteredCart = cart.filter((product) => product.itemid === id)
+      const count = filteredCart.length
+      return count
+    },
+    available() {
+      if (this.data.available <= this.cartCount) {
+        return false
+      }
+      return true
+    },
+  },
   methods: {
     addToCart(product) {
       if (product) {
@@ -100,6 +135,9 @@ export default {
       if (product) {
         this.$store.commit('removeFromCart', product)
       }
+    },
+    imageError() {
+      this.showImage = false
     },
   },
 }

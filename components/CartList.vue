@@ -17,7 +17,7 @@
         :key="'product-' + index"
         class="relative max-w-md my-10"
       >
-        <product :data="product" />
+        <product :data="product" :in-cart="true" />
       </div>
     </div>
   </div>
